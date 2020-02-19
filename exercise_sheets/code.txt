@@ -1,0 +1,6 @@
+import numpy as np
+dict = {}
+l = ["CHEM 25B","COSI 21A ","ECON 82B","HIST 147B","LING 125B","MATH 15A","ENG 11A","PSYC 51A","BUS 212A","BIOL 55B","HIST 80B"]
+names= ["Emma","Olivia","Ava","Isabella","Sophia","Charlotte","Mia","Liam","Noah","William","James","Oliver","Benjamin","Elijah"]
+dict.update([(n,[l[i] for i in np.random.randint(0,len(l),size=5)]) for n in names])
+print(print("{" + "\n".join("{}: {}".format(k, v) for k, v in dict.items()) + "}"))
