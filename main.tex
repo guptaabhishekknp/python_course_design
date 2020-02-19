@@ -1,0 +1,171 @@
+\documentclass{article}
+\usepackage[margin=0.7in]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{mwe}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{color}
+% Tikz settings optimized for causal graphs.
+% Just copy-paste this part
+\usetikzlibrary{shapes,decorations,arrows,calc,arrows.meta,fit,positioning}
+\tikzset{
+    -Latex,auto,node distance =1 cm and 1 cm,semithick,
+    state/.style ={circle, draw, minimum width = 0.7 cm},
+    point/.style = {circle, draw, inner sep=0.04cm,fill,node contents={}},
+    bidirected/.style={Latex-Latex,dashed},
+    el/.style = {inner sep=2pt, align=left, sloped},
+    ->,>=stealth'
+}
+
+\definecolor{backcolour}{rgb}{0.94,0.97,1.0}
+
+\lstdefinestyle{customc}{
+  backgroundcolor=\color{backcolour},
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  %frame=L,
+  xleftmargin=\parindent,
+  language=python,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+}
+
+\lstdefinestyle{customasm}{
+  belowcaptionskip=1\baselineskip,
+  frame=L,
+  xleftmargin=\parindent,
+  language=[x86masm]Assembler,
+  basicstyle=\footnotesize\ttfamily,
+  commentstyle=\itshape\color{purple!40!black},
+}
+
+\lstset{escapechar=@,style=customc}
+
+\usepackage[utf8]{inputenc}
+\title{Week 11 - interpreting error messages, debugging}
+\author{Math16b}
+\date{}
+\begin{document}
+\maketitle
+
+
+\section{List of Common Errors}
+\begin{enumerate}
+    \item    \begin{lstlisting} 
+NameError: name 'some_name' is not defined
+NameError: global name 'some_name' is not defined
+    \end{lstlisting}
+    This error occurs when you use a variable name which has not been declared before.
+    
+    \item \begin{lstlisting} 
+IndentationError: unindent does not match any outer indentation level
+IndentationError: unexpected indent
+IndentationError: expected an indented block
+
+    \end{lstlisting}
+     In order to indent the code correctly, one must consistently use one and only one of either: tab or: four spaces. These errors occur if there are tabs mixed with four spaces. These can also occur if there is inconsistent space-indenting within a single block.
+     
+     \item \begin{lstlisting}
+SyntaxError: invalid syntax
+     \end{lstlisting}
+     These can happen in a variety of sitations. Some of them are:
+     \begin{itemize}
+         \item Forgetting the parens around the arguments to print
+         \item Forgetting the colon at the end of the condition in an if statement
+         \item Trying to use a reserved word as a variable name
+
+     \end{itemize}
+     
+    \item \begin{lstlisting}
+TypeError: unsupported operand type(s) for +: 'int' and 'str'
+
+    \end{lstlisting}
+    A type error can occur when you do an operation on a data type which is not correct. For example, in the above shown error, the problem arises because int+string does not make sense.
+    
+    \item \begin{lstlisting}
+AttributeError: 'module' object has no attribute 'sparse'
+    \end{lstlisting}
+    An attribute in Python means some property that is associated with a particular type of object. In other words, the attributes of a given object are the variables and functions it has in it. Attribute errors in Python are generally raised when you try to access or call an attribute that a particular object type doesn’t possess. 
+    
+    \item \begin{lstlisting}
+ValueError: could not convert string to float: 'string'
+
+    \end{lstlisting}
+    A Value error is raised when a built-in operation or function receives an argument that has the right type but an inappropriate value. In the above example, the float function can take a string, ie float('5'). The error arises when the value 'string' in float('string') is an inappropriate (non-convertible) string. \\
+    Or for example when we try to add two numpy arrays of different sizes.
+    
+    \item \begin{lstlisting}
+KeyError: 'name'
+    \end{lstlisting}
+    These errors occur when dealing with python dictionaries. A keyError raised when a dictionary key is not found in the set of existing keys.
+    
+    \item \begin{lstlisting}
+IndexError: list index out of range
+    \end{lstlisting}
+    This error occurs when we are trying to refer to some index that doesn't exist.
+    
+    \item \begin{lstlisting}
+ModuleNotFoundError
+    \end{lstlisting}
+    This occurs when a module is not found.
+
+\item \begin{lstlisting}
+ImportError
+\end{lstlisting}
+This occurs when a specified function can not be found.
+
+\item \begin{lstlisting}
+ZeroDivisionError: division by zero
+\end{lstlisting}
+This occurs when you divide by zero.
+\end{enumerate}
+\section{Exercises}
+The code snippets below raise one of the above errors. For each code snippet, indicate the error it raises.
+
+\begin{enumerate}
+    \item \begin{lstlisting}
+for i in range(10)
+    print(i**2)
+    \end{lstlisting}
+    
+    \item \begin{lstlisting}
+import numpy as np
+A = numpy.array([1,2,3])
+    \end{lstlisting}
+    
+    \item \begin{lstlisting}
+a = 1
+print(A)
+    \end{lstlisting}
+    
+\item \begin{lstlisting}
+l = ['a',2, True]
+print(l(0))
+\end{lstlisting}
+
+\item \begin{lstlisting}
+ls = [1,2,3,4]
+for i in ls:
+    print(ls[i]+ls[i+1])
+\end{lstlisting}
+
+\item \begin{lstlisting}
+print(2+'2')
+\end{lstlisting}
+
+
+\item \begin{lstlisting}
+l = 1
+l.append(3)
+\end{lstlisting}
+\end{enumerate}
+\end{document}
